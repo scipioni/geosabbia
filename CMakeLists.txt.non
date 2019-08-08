@@ -1,0 +1,38 @@
+cmake_minimum_required (VERSION 2.6)
+project (geosabbia)
+
+#find_package(GL)
+#find_package(GLUT)
+#find_package(GLU)
+#find_package(GLEW)
+
+include_directories(
+    /usr/local/cuda-7.0/include
+    /lab/gameengine/flex
+    /lab/gameengine/flex/include
+    )
+
+link_directories(
+    /usr/lib
+    /usr/local/cuda-7.0/lib64
+    )
+
+set(CMAKE_CXX_FLAGS "-g -Wall -O3 -fPIC -ffast-math -fpermissive -fno-strict-aliasing")
+
+target_link_libraries(
+    geosabbia
+    /lab/gameengine/flex/lib/linux64/flexRelease_x64.a
+    -lGL
+    -lglut 
+    -lGLU 
+    -lGLEW 
+    -lcudart
+    )
+
+set(HEADER_FILES src/*.h)
+set(SORCES src/*.cpp /lab/gameengine/flex/core/*.cpp)
+
+add_executable(geosabbia ${SOURCES} ${HEADER_FILES})
+#add_executable(geosabbia src/prob2.cpp src/ParseRecord.cpp src/Sorter.cpp src/Timing.cpp)
+
+install(TARGETS geosabbia DESTINATION bin)
